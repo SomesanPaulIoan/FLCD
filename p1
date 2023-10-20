@@ -1,0 +1,19 @@
+# In this program we compute GCD of 2 numbers.
+
+// main as function(0).
+
+    a, b as integer.
+    a <- reader(input).
+    b <- reader(input).
+    
+    // while b > 0. 
+        r as integer.
+        r <- a % b.
+        a <- b.
+        b <- r.
+    \\
+
+    writer(output(1), a).
+
+    main <- 0.
+\\

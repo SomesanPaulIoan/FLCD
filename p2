@@ -1,0 +1,24 @@
+# In this program we compute minimum of 3 numbers.
+
+// main as function(0).
+
+    a, b, c, min1, rez as integer.
+
+    a <- reader(input).
+    b <- reader(input).
+    c <- reader(input).
+
+    // if a > b.
+        // then min1 <- a. \\
+        // else min1 <- b. \\
+    \\
+
+    // if min1 > c.
+        // then rez <- min1. \\
+        // else rez <- c. \\
+    \\
+
+    writer(output(1), rez).
+
+    main <- 0.
+\\
