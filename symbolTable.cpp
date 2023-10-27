@@ -8,7 +8,12 @@ struct Node {
     Node* left;
     Node* right;
 
-    Node(string k, string v) : key(k), value(v), left(nullptr), right(nullptr) {}
+    Node(string k, string v){
+        key = k;
+        value = v;
+        left = nullptr;
+        right = nullptr; 
+    }
 };
 
 class SymbolTable {
@@ -18,14 +23,12 @@ private:
     Node* insert(Node* node, string key, string value) {
         if (node == nullptr)
             return new Node(key, value);
-
         if (key < node->key)
             node->left = insert(node->left, key, value);
         else if (key > node->key)
             node->right = insert(node->right, key, value);
         else
             node->value = value;
-
         return node;
     }
 
@@ -55,7 +58,6 @@ public:
 };
 
 int main() {
-
     SymbolTable identifierTable;
     SymbolTable constantTable;
 
