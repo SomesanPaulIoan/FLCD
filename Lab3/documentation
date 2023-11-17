@@ -1,0 +1,6 @@
+This code uses a Binary Tree to store the symbole table.
+
+The code parses the input file which is the source code and we
+separate all the tokens in 5 categories: KeyWord, Identifier
+Number, Operator, Symbol.
+  
