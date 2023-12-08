@@ -1,0 +1,1 @@
+To represent the data, I use a c++ map in order to have a table to store the nonterminals and their productions.
