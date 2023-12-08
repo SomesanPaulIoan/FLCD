@@ -1,0 +1,104 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <unordered_set>
+#include <unordered_map>
+#include <vector>
+using namespace std;
+
+struct Production {
+    string nonterminal;
+    vector<string> symbols;
+};
+
+unordered_set<string> nonterminals;
+unordered_set<string> terminals;
+unordered_map<string, vector<Production>> productions;
+
+void readGrammar(const string& filename) {
+    ifstream file(filename);
+
+    string line;
+    while (getline(file, line)) {
+        istringstream iss(line);
+        string nonterminal;
+        iss >> nonterminal;
+        nonterminals.insert(nonterminal);
+
+        string arrow;
+        iss >> arrow;
+
+        string symbol;
+        vector<string> production;
+        while (iss >> symbol) {
+            if (symbol != "|") {
+                production.push_back(symbol);
+                terminals.insert(symbol);
+            }
+        }
+
+        productions[nonterminal].push_back({nonterminal, production});
+    }
+
+    file.close();
+}
+
+void printNonTerminals() {
+    cout << "NonTerminals : { ";
+    for (const auto& element : nonterminals) {
+        cout << element << " ";
+    }
+    cout << "}" << '\n';
+}
+
+void printTerminals(){
+    cout << "Terminals : { ";
+    for(const auto& element : terminals){
+        if(nonterminals.find(element) == nonterminals.end())
+            cout << element << " ";
+    }
+    cout << "}" << '\n';
+}
+
+void printProductions(const string& nonterminal) {
+    if (productions.find(nonterminal) != productions.end()) {
+        cout << "Productions for " << nonterminal << ": " << endl;
+        for (const auto& prod : productions[nonterminal]) {
+            cout << prod.nonterminal << " -> ";
+            for (const auto& symbol : prod.symbols) {
+                cout << symbol << " ";
+            }
+            cout << '\n';
+        }
+    } else {
+        cout << "No productions found for " << nonterminal << endl;
+    }
+}
+
+bool isCFG() {
+    for (const auto &prodSet: productions) {
+        for (const auto &prod: prodSet.second) {
+            if (prod.symbols.size() == 0) {
+                return false;
+            }
+        }
+    }
+    return true;
+} // verificam ca in stanga am un singur caracter si este nonterminal
+
+int main() {
+    readGrammar("g1.txt");
+
+    printNonTerminals();
+    printTerminals();
+
+    for (const auto& nonterm : nonterminals)
+        printProductions(nonterm);
+
+    if (isCFG())
+        cout << "The grammar is in Context-Free Grammar (CFG) form." << endl;
+    else
+        cout << "The grammar is not in Context-Free Grammar (CFG) form." << endl;
+
+    return 0;
+}
